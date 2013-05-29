@@ -100,8 +100,13 @@ module.exports = function(grunt) {
     };
         
     // get the file content
-    var content = grunt.file.read(filepath);
-
+    
+    var content = grunt.file.read(filepath),
+      options = grunt.task.current.options();
+      
+    if(options.processContent){
+      content = grunt.template.process(content, {data:options.data});
+    }
     rigger.process(content, option, callback);
   }
 };
